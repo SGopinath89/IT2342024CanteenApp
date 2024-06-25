@@ -1,4 +1,3 @@
-
 const canteenmodel = require("../models/canteen.model");
 
 
@@ -31,5 +30,5 @@ const create = async (req, res) => {
   }
 };
 
-module.exports={
+module.exports = {
     create};
