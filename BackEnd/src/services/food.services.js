@@ -32,6 +32,19 @@ const addfood = async(req,res) => {
     }
   };
 
+  const displayfoods = async (req, res) => {
+    try {
+      const food = await foodmodel.find();
+      if (!food) {
+        res.status(404).send({ success: false, message: "foods not found" });
+      }
+      res.status(200).json(food);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   module.exports={
-    addfood
+    addfood,
+    displayfoods
   };
