@@ -30,3 +30,7 @@ const placeorder =async (req, res) => {
       console.log(err);
     }
   };
+
+  module.exports={
+    placeorder,
+  }
