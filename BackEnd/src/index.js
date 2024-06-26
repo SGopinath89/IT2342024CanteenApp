@@ -5,12 +5,14 @@ const connectDB = require("./database/config");
 const dotenv = require('dotenv');
 const authroutes = require('./routes/auth.routes')
 const userroutes = require('./routes/user.route')
+const foodroutes = require('./routes/food.routes')
 
 dotenv.config();
 connectDB();
 
 app.use("/auth",authroutes)
 app.use("/user",userroutes)
+app.use("/foods",foodroutes)
 
 app.listen(PORT, () => {
   console.log("API is running on port", PORT);
