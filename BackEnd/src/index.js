@@ -7,6 +7,10 @@ const authroutes = require('./routes/auth.routes')
 const userroutes = require('./routes/user.route')
 const foodroutes = require('./routes/food.routes')
 
+const bodyParser = require("body-parser")
+
+app.use(bodyParser.json())
+
 dotenv.config();
 connectDB();
 
