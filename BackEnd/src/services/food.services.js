@@ -4,8 +4,8 @@ const addfood = async(req,res) => {
     try {
       const { foodname, price, availableTime, imageurl } = req.body;
       const canteenid = req.params.id;
-      const applied = await canteenmodel.findById(canteenid);
-      const appliedcanteenid = applied._id;
+      //const applied = await canteenmodel.findById(canteenid);
+      //const appliedcanteenid = applied._id;
       //validation part
       if (!foodname || !price || !availableTime){
         return res
@@ -16,7 +16,7 @@ const addfood = async(req,res) => {
       const newfood = new foodmodel({
         foodname,
         price,
-        Canteenid: appliedcanteenid,
+        Canteenid: canteenid,
         availableTime,
         imageurl,
       });
