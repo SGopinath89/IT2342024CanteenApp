@@ -8,7 +8,7 @@ const register = async (req, res) => {
       req.body;
     //validate
     if (
-      !registrationnumber ||
+      !registrationnumber||
       !username ||
       !password ||
       !telephone ||
