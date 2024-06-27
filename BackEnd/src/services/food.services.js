@@ -44,7 +44,35 @@ const addfood = async(req,res) => {
     }
   };
 
+  const displayfood = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const food = await foodmodel.findById(id);
+      if (!food) {
+        res.status(404).send({ success: false, message: "foods not found" });
+      }
+      res.status(200).json(food);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deletefood = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const findfood = await foodmodel.findByIdAndDelete(id);
+      if (!findfood) {
+        return res.status(404).send({ success: true, message: "food not found" });
+      }
+      res.status(200).send({ message: "food delete Succesfully" });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   module.exports={
     addfood,
-    displayfoods
+    displayfoods,
+    displayfood,
+    deletefood
   };
