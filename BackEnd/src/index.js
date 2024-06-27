@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const authroutes = require('./routes/auth.routes')
 const userroutes = require('./routes/user.route')
 const foodroutes = require('./routes/food.routes')
+const canteenroutes = require('./routes/canteen.routes')
 
 dotenv.config();
 connectDB();
@@ -13,6 +14,7 @@ connectDB();
 app.use("/auth",authroutes)
 app.use("/user",userroutes)
 app.use("/foods",foodroutes)
+app.use("/canteen",canteenroutes)
 
 app.listen(PORT, () => {
   console.log("API is running on port", PORT);
