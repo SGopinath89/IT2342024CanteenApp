@@ -9,6 +9,10 @@ const foodroutes = require('./routes/food.routes')
 const canteenroutes = require('./routes/canteen.routes')
 const orderroutes = require("./routes/order.routes")
 
+const bodyParser = require("body-parser")
+
+app.use(bodyParser.json())
+
 dotenv.config();
 connectDB();
 

@@ -4,17 +4,18 @@ const canteenmodel = require("../models/canteen.model");
 //Add canteen
 const create = async (req, res) => {
   try {
-    const { Canteenname, openclosetime, description } = req.body;
+    const { name, opentime,closetime, description } = req.body;
 
-    if (!Canteenname || !openclosetime || !description) {
+    if (!name || !opentime||!closetime || !description) {
       return res.status(500).send({
         success: false,
         message: "Please provide all details",
       });
     }
     const newcanteen = new canteenmodel({
-      Canteenname,
-      openclosetime,
+      name,
+      opentime,
+      closetime,
       description,
     });
 
