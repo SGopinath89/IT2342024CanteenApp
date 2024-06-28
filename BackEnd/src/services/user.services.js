@@ -45,8 +45,39 @@ const usermodel = require("../models/user.model");
       });
     }
   };
+  const updateuser = async (req, res) => {
+    try {
+      const userid = req.params.id;
+      if (!userid) {
+        return res.status(500).send({
+          success: false,
+          message: "No food id was found, Provide food id",
+        });
+      }
+      const user = await foodmodel.findById(userid);
+      if (!user) {
+        return res
+          .status(404)
+          .send({ success: false, message: "User is Not Found" });
+      }
+      const { registrationnumber,username, telephone} = req.body;
+  
+     await foodmodel.findByIdAndUpdate(
+        userid,
+        { registrationnumber,username, telephone },
+        { new: true }
+      );
+      res
+        .status(200)
+        .send({ success: true, message: " User was updated Successfully" });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   module.exports={
     getallusers,
-    getuser
+    getuser,
+    updateuser
 
   }
