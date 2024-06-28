@@ -70,9 +70,40 @@ const addfood = async(req,res) => {
     }
   };
 
+  const updatefood = async (req, res) => {
+    try {
+      const foodid = req.params.id;
+      if (!foodid) {
+        return res.status(500).send({
+          success: false,
+          message: "No food id was found, Provide food id",
+        });
+      }
+      const food = await foodmodel.findById(foodid);
+      if (!food) {
+        return res
+          .status(404)
+          .send({ success: false, message: "Food is Not Found" });
+      }
+      const { foodname, price, availableTime, imageurl } = req.body;
+  
+     await foodmodel.findByIdAndUpdate(
+        foodid,
+        { foodname, price, availableTime, imageurl },
+        { new: true }
+      );
+      res
+        .status(200)
+        .send({ success: true, message: " Food was updated Successfully" });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   module.exports={
     addfood,
     displayfoods,
     displayfood,
-    deletefood
+    deletefood,
+    updatefood
   };
