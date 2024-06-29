@@ -58,6 +58,7 @@ const getcanteen = async (req, res) => {
   }
 };
 
+
 const deletecanteen = async (req, res) => {
     const id = req.params.id;
     try {
@@ -73,9 +74,45 @@ const deletecanteen = async (req, res) => {
       console.log(err);
     }
   };
+=======
+const updatecanteen = async (req, res) => {
+  try {
+    const canteenId = req.params.id;
+    if (!canteenId) {
+      return res.status(500).send({
+        success: false,
+        message: "No food id was found, Provide food id",
+      });
+    }
+    const canteen = await foodmodel.findById(canteenId);
+    if (!canteen) {
+      return res
+        .status(404)
+        .send({ success: false, message: "Food is Not Found" });
+    }
+    const {name,opentime,closetime,description, } = req.body;
+
+    const updatefood = await foodmodel.findByIdAndUpdate(
+      canteenId,
+      { name,opentime,closetime,description, },
+      { new: true }
+    );
+    res
+      .status(200)
+      .send({ success: true, message: " Food was updated Successfully" });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 
 module.exports = {
     create,
     getcanteens,
     getcanteen,
-    deletecanteen};
+    updatecanteen,
+    deletecanteen
+}
+
+    
+
