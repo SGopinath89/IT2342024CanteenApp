@@ -105,50 +105,33 @@ const updatecanteen = async (req, res) => {
   }
 };
 
-
-const updatecanteen = async (req, res) => {
+const getfoods =async (req, res) => {
   try {
-    const canteenId = req.params.id;
-    if (!canteenId) {
-      return res.status(500).send({
-        success: false,
-        message: "No food id was found, Provide food id",
-      });
-    }
-    const canteen = await foodmodel.findById(canteenId);
-    if (!canteen) {
-      return res
-        .status(404)
-        .send({ success: false, message: "Food is Not Found" });
-    }
-    const {name,opentime,closetime,description, } = req.body;
-
-    const updatefood = await foodmodel.findByIdAndUpdate(
-      canteenId,
-      { name,opentime,closetime,description, },
-      { new: true }
-    );
-    res
-      .status(200)
-      .send({ success: true, message: " Food was updated Successfully" });
+    const findfoods = await canteenmodel.aggregate([
+      { $match: { Canteenname: "Applied" } },
+      {
+        $lookup: {
+          from: "foods",
+          localField: "_id",
+          foreignField: "Canteenid",
+          as: "foods",
+        },
+      },
+      { $project: { _id: 0, Canteenname: 1, foods: 1 } },
+    ]);
+    res.status(200).json(findfoods);
   } catch (err) {
     console.log(err);
   }
-};
+}
 
 module.exports = {
     create,
     getcanteens,
     getcanteen,
-<<<<<<< HEAD
     deletecanteen,
     getcanteen,
-    updatecanteen};
-=======
     updatecanteen,
-    deletecanteen
-}
+    getfoods};
 
-    
->>>>>>> main
 
