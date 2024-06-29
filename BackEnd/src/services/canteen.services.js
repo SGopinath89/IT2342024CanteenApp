@@ -74,7 +74,7 @@ const deletecanteen = async (req, res) => {
       console.log(err);
     }
   };
-=======
+  
 const updatecanteen = async (req, res) => {
   try {
     const canteenId = req.params.id;
