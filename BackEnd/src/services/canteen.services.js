@@ -105,14 +105,44 @@ const updatecanteen = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+const getfoods =async (req, res) => {
+  try {
+    const findfoods = await canteenmodel.aggregate([
+      { $match: { Canteenname: "Applied" } },
+      {
+        $lookup: {
+          from: "foods",
+          localField: "_id",
+          foreignField: "Canteenid",
+          as: "foods",
+        },
+      },
+      { $project: { _id: 0, Canteenname: 1, foods: 1 } },
+    ]);
+    res.status(200).json(findfoods);
+  } catch (err) {
+    console.log(err);
+  }
+}
+=======
+>>>>>>> main
 
 module.exports = {
     create,
     getcanteens,
     getcanteen,
+<<<<<<< HEAD
+    deletecanteen,
+    getcanteen,
+    updatecanteen,
+    getfoods};
+
+=======
     updatecanteen,
     deletecanteen
 }
 
     
+>>>>>>> main
 
