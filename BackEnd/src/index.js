@@ -10,6 +10,7 @@ const canteenroutes = require('./routes/canteen.routes')
 const orderroutes = require("./routes/order.routes")
 
 const bodyParser = require("body-parser")
+require('dotenv').config();
 
 app.use(bodyParser.json())
 
