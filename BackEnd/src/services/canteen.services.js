@@ -58,6 +58,23 @@ const getcanteen = async (req, res) => {
   }
 };
 
+
+const deletecanteen = async (req, res) => {
+    const id = req.params.id;
+    try {
+      const result = await canteenmodel.findByIdAndDelete(id);
+  
+      if (!result) {
+        return res
+          .status(404)
+          .send({ success: false, message: "cannot find canteen" });
+      }
+      res.status(200).send({ message: "Canteen Deleted" });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+=======
 const updatecanteen = async (req, res) => {
   try {
     const canteenId = req.params.id;
@@ -88,8 +105,14 @@ const updatecanteen = async (req, res) => {
   }
 };
 
+
 module.exports = {
     create,
     getcanteens,
-    getcanteen},
-    updatecanteen;
+    getcanteen,
+    updatecanteen,
+    deletecanteen
+}
+
+    
+
