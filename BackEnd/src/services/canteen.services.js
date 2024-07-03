@@ -105,7 +105,6 @@ const updatecanteen = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 const getfoods =async (req, res) => {
   try {
     const findfoods = await canteenmodel.aggregate([
@@ -125,24 +124,14 @@ const getfoods =async (req, res) => {
     console.log(err);
   }
 }
-=======
->>>>>>> main
+
 
 module.exports = {
     create,
     getcanteens,
     getcanteen,
-<<<<<<< HEAD
     deletecanteen,
-    getcanteen,
     updatecanteen,
-    getfoods};
-
-=======
-    updatecanteen,
-    deletecanteen
-}
-
-    
->>>>>>> main
-
+    getfoods
+  
+};
