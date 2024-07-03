@@ -8,6 +8,7 @@ const userroutes = require('./routes/user.route')
 const foodroutes = require('./routes/food.routes')
 const canteenroutes = require('./routes/canteen.routes')
 const orderroutes = require("./routes/order.routes")
+const payamentroutes = require('./routes/payment.routes')
 
 const bodyParser = require("body-parser")
 require('dotenv').config();
@@ -22,6 +23,7 @@ app.use("/user",userroutes)
 app.use("/foods",foodroutes)
 app.use("/canteen",canteenroutes)
 app.use("/orders",orderroutes)
+app.use("/payments",payamentroutes)
 
 app.listen(PORT, () => {
   console.log("API is running on port", PORT);
