@@ -42,8 +42,21 @@ const displaypayment = async (req, res) => {
   }
 };
 
+const getpayments = async (req, res) => {
+  console.log(req.query.type)
+  try {
+    const payments = await paymentmodel.find();
+    if (!payments) {
+      res.status(404).send({ success: false, message: "payments not found" });
+    }
+    res.status(200).json(payments);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 module.exports = {
   pay,
-  displaypayment
+  displaypayment,
+  getpayments
 }

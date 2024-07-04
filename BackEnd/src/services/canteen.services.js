@@ -125,7 +125,6 @@ const getfoods =async (req, res) => {
   }
 }
 
-
 module.exports = {
     create,
     getcanteens,
@@ -133,5 +132,5 @@ module.exports = {
     deletecanteen,
     updatecanteen,
     getfoods
-  
 };
+
