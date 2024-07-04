@@ -124,15 +124,23 @@ const getfoods =async (req, res) => {
     console.log(err);
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 462e6b876c2adcb8e3d3d1c9b6cdaffe5d49ae44
 
 module.exports = {
     create,
     getcanteens,
     getcanteen,
     deletecanteen,
-    getcanteen,
     updatecanteen,
     getfoods
+<<<<<<< HEAD
 };
 
 
+=======
+  
+};
+>>>>>>> 462e6b876c2adcb8e3d3d1c9b6cdaffe5d49ae44
