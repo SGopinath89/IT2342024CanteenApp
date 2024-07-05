@@ -124,6 +124,25 @@ const getfoods =async (req, res) => {
     console.log(err);
   }
 }
+const checkAdmin = async (canteenID, userId) => {
+  if (!userId) {
+    throw new Error("User ID is required");
+  }
+  if (!canteenID) {
+    throw new Error("canteen ID is required");
+  }
+
+  const canteen = await canteenmodel.findById(canteenID);
+ 
+  if ( !canteen.adminid.toString()) {
+    throw new Error("No admins found");
+  }
+
+  const isAdmin = (canteen.adminid.toString() === userId.toString())
+
+  return isAdmin;
+};
+
 
 module.exports = {
     create,
@@ -131,6 +150,7 @@ module.exports = {
     getcanteen,
     deletecanteen,
     updatecanteen,
-    getfoods
+    getfoods,
+    checkAdmin
 };
 
