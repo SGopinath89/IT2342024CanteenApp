@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const {addfood,displayfoods,displayfood,deletefood,updatefood} = require("../services/food.services")
-const {verifyToken} = require("../middlewares/auth.middleware")
+const {verifyToken,canteenAdminProtect} = require("../middlewares/auth.middleware")
 
-router.post("/",verifyToken, addfood) 
+router.post("/", verifyToken,canteenAdminProtect,addfood) 
 router.get("/",verifyToken, displayfoods)
-router.get("/:id",verifyToken, displayfood)
-router.delete("/:id",verifyToken, deletefood)
-router.put("/:id",verifyToken, updatefood)
+router.get("/:id", verifyToken,displayfood)
+router.delete("/:id",verifyToken,canteenAdminProtect, deletefood)
+router.put("/:id",verifyToken,canteenAdminProtect, updatefood)
 
 module.exports=router
