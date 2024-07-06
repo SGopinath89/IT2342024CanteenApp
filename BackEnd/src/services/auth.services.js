@@ -2,19 +2,11 @@ const usermodel = require("../models/user.model.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-
 const register = async (req, res) => {
   try {
-    const { registrationnumber, username, password, telephone, usertype } =
-      req.body;
+    const { registrationnumber, username, password, telephone } = req.body;
     //validate
-    if (
-      !registrationnumber||
-      !username ||
-      !password ||
-      !telephone ||
-      !usertype
-    ) {
+    if (!registrationnumber || !username || !password || !telephone) {
       return res
         .status(500)
         .send({ success: false, message: "Please Provide All Fields" });
@@ -35,12 +27,14 @@ const register = async (req, res) => {
       username,
       password: hashpassword,
       telephone,
-      usertype,
+      usertype: "user",
     });
+
+    const { password: pass, usertype, ...rest } = user;
 
     res
       .status(201)
-      .send({ success: true, message: "Successfully Registered", user });
+      .send({ success: true, message: "Successfully Registered", rest });
   } catch (err) {
     console.log(err);
     res
@@ -79,9 +73,13 @@ const login = async (req, res) => {
     }
 
     // Generate JWT
-    const token = jwt.sign({ id: user._id, usertype: user.usertype }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { id: user._id, usertype: user.usertype },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     res.status(200).send({
       success: true,
@@ -99,8 +97,6 @@ const login = async (req, res) => {
 };
 
 module.exports = {
-    register,
-    login
-    
-  };
-  
+  register,
+  login,
+};

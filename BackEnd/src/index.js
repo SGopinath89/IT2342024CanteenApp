@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 dotenv.config();
 connectDB();
 
-app.use("/auth",authroutes)
+app.use("/api1/auth", authroutes);
 app.use("/user",userroutes)
 app.use("/foods",foodroutes)
 app.use("/canteen",canteenroutes)
