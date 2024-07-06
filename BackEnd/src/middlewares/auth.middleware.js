@@ -33,7 +33,38 @@ const checkUserType = (requiredTypes) => {
   };
 };
 
+const canteenAdminProtect = async (req, res, next) => {
+  if (!req.user.usertype || req.user.usertype !== "staff") {
+    return res.status(403).json({
+      user: {
+        id: req.user._id,
+        usertype: req.user.usertype,
+      },
+      message: "You have to be an admin of the canteeen to access this resource",
+    });
+  }
+
+  const { Canteenid} = req.body;
+  const userId = req.user._id;
+
+  const isCanteenAdmin = await canteenservices.checkAdmin(Canteenid, userId);
+
+  if (!isCanteenAdmin) {
+    return res.status(403).json({
+      user: {
+        id: req.user._id,
+        usertype: req.user.usertype,
+      },
+      message: "You have to be an admin of the canteeen to access this resource",
+    });
+  }
+
+  next();
+};
+
+
 module.exports = {
   verifyToken,
-  checkUserType
+  checkUserType,
+  canteenAdminProtect
 };
