@@ -1,12 +1,9 @@
 import React from "react";
 import bg from "../assets/images/bg/bg.jpg";
 import logo from "../assets/images/logo.png";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const onRegisterClick = () => {};
-
-  const onSignInClick = () => {};
-
   return (
     <div
       className=" min-h-screen bg-cover bg-no-repeat"
@@ -19,18 +16,18 @@ const Home = () => {
         <h1 className="text-8xl font-semibold font-mono text-red-800 mb-8">
           VanniEats
         </h1>
-        <button
-          onClick={onRegisterClick}
+        <Link
+          to="/register"
           className="text-xl bg-yellow-600 text-black px-4 py-2 rounded-xl mb-3 border border-yellow-600 transition-colors hover:bg-white"
         >
           Register
-        </button>
-        <button
-          onClick={onSignInClick}
+        </Link>
+        <Link
+          to="/signin"
           className="text-xl bg-yellow-600 text-black px-4 py-2 rounded-xl mb-3 border border-yellow-600 transition-colors hover:bg-white"
         >
           SignIn
-        </button>
+        </Link>
       </div>
     </div>
   );
