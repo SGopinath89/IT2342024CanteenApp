@@ -3,7 +3,7 @@ import bg from "../assets/images/bg/bg1.jpg";
 import logo from "../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 
-const Register = () => {
+const SignIn = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const Register = () => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api1/auth/register", {
+      const res = await fetch("/api1/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,11 +33,11 @@ const Register = () => {
         console.log(data);
 
         alert(data.message);
-        navigate("/signin");
+        navigate("/user-home");
       }
     } catch (error) {
       console.log("error is " + error);
-      alert("Registration failed");
+      alert("Login failed");
     }
   };
   return (
@@ -50,7 +50,7 @@ const Register = () => {
       </div>
 
       <div className="absolute left-1/4 top-1/3 flex flex-col items-center  w-1/5 p-5">
-        <h2 className="text-3xl mb-6">Register Here..</h2>
+        <h2 className="text-3xl mb-6">SignIn Here..</h2>
         <form onSubmit={(e) => onSubmitForm(e)} className="w-full text-lg">
           <div className="flex justify-between mb-2">
             <label className="inline-block" htmlFor="registrationnumber">
@@ -60,17 +60,6 @@ const Register = () => {
               className="w-52 outline-none border-none rounded-md px-3 py-1"
               type="text"
               id="registrationnumber"
-              onChange={(e) => onInputChange(e)}
-            />
-          </div>
-          <div className="flex justify-between mb-2">
-            <label className="inline-block" htmlFor="username">
-              Username
-            </label>
-            <input
-              className="w-52 outline-none border-none rounded-md px-3 py-1"
-              type="text"
-              id="username"
               onChange={(e) => onInputChange(e)}
             />
           </div>
@@ -85,30 +74,20 @@ const Register = () => {
               onChange={(e) => onInputChange(e)}
             />
           </div>
-          <div className="flex justify-between mb-2">
-            <label className="inline-block" htmlFor="telephone">
-              Phone No
-            </label>
-            <input
-              className="w-52 outline-none border-none rounded-md px-3 py-1"
-              type="text"
-              id="telephone"
-              onChange={(e) => onInputChange(e)}
-            />
-          </div>
+
           <button
             type="submit"
             className="mt-6 text-xl bg-yellow-600 text-black px-4 py-2 rounded-xl mb-3 border border-yellow-600 transition-colors hover:bg-white"
           >
-            Register
+            SignIn
           </button>
         </form>
-        <Link to="/signin" className="text-blue-900">
-          Already have an account? Let's SignIn
+        <Link to="/register" className="text-blue-900">
+          Don't have an account? Let's Register
         </Link>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default SignIn;
