@@ -9,7 +9,12 @@ const foodroutes = require('./routes/food.routes')
 const canteenroutes = require('./routes/canteen.routes')
 const orderroutes = require("./routes/order.routes")
 const payamentroutes = require('./routes/payment.routes')
-
+const {
+  mainadminaccount,
+  appliedadminaccount,
+  bsadminaccount,
+  boysadminaccount,
+} = require("../seed");
 const bodyParser = require("body-parser")
 require('dotenv').config();
 
@@ -17,6 +22,11 @@ app.use(bodyParser.json())
 
 dotenv.config();
 connectDB();
+
+mainadminaccount();
+appliedadminaccount();
+bsadminaccount();
+boysadminaccount();
 
 app.use("/api1/auth", authroutes);
 app.use("/user",userroutes)
