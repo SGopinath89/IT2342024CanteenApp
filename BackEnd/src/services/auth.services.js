@@ -1,20 +1,11 @@
 const usermodel = require("../models/user.model.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-
 const register = async (req, res) => {
   try {
-    const { registrationnumber, username, password, telephone, usertype } =
-      req.body;
+    const { registrationnumber, username, password, telephone } = req.body;
     //validate
-    if (
-      !registrationnumber||
-      !username ||
-      !password ||
-      !telephone ||
-      !usertype
-    ) {
+    if (!registrationnumber || !username || !password || !telephone) {
       return res
         .status(500)
         .send({ success: false, message: "Please Provide All Fields" });
@@ -35,12 +26,12 @@ const register = async (req, res) => {
       username,
       password: hashpassword,
       telephone,
-      usertype,
+      usertype: "user",
     });
-
+    const { password: pass, usertype, ...rest } = user;
     res
       .status(201)
-      .send({ success: true, message: "Successfully Registered", user });
+      .send({ success: true, message: "Successfully Registered", rest });
   } catch (err) {
     console.log(err);
     res
@@ -48,7 +39,6 @@ const register = async (req, res) => {
       .send({ sucess: false, message: "error in registered API", err });
   }
 };
-
 const login = async (req, res) => {
   try {
     const { registrationnumber, password } = req.body;
@@ -59,7 +49,6 @@ const login = async (req, res) => {
         message: "Please provide registration number and password",
       });
     }
-
     // Check if user exists
     const user = await usermodel.findOne({ registrationnumber });
     if (!user) {
@@ -68,7 +57,6 @@ const login = async (req, res) => {
         message: "User not found",
       });
     }
-
     // Check if password is correct
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
@@ -77,17 +65,20 @@ const login = async (req, res) => {
         message: "Invalid credentials",
       });
     }
-
     // Generate JWT
-    const token = jwt.sign({ id: user._id, usertype: user.usertype }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { id: user._id, usertype: user.usertype },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
-    res.status(200).send({
-      success: true,
-      message: "Login successful",
-      token,
-    });
+    const { password: pass, ...rest } = user._doc;
+    res
+      .cookie("authorization", token, { httpOnly: true })
+      .status(200)
+      .json(rest);
   } catch (err) {
     console.log(err);
     res.status(500).send({
@@ -97,10 +88,7 @@ const login = async (req, res) => {
     });
   }
 };
-
 module.exports = {
-    register,
-    login
-    
-  };
-  
+  register,
+  login,
+};

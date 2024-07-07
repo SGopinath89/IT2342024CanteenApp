@@ -75,9 +75,22 @@ const usermodel = require("../models/user.model");
     }
   };
 
+  const deleteuser=async (req, res) => {
+    try {
+      await usermodel.findByIdAndDelete(req.params.id);
+      return res
+        .status(200)
+        .send({ success: true, message: "Account Delete Successfully" });
+    } catch (error) {
+      res
+        .status(500)
+        .send({ success: false, message: "Error in Delete Profile", error });
+    }
+  };
   module.exports={
     getallusers,
     getuser,
-    updateuser
+    updateuser,
+    deleteuser
 
   }
