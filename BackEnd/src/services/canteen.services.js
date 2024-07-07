@@ -1,6 +1,4 @@
 const canteenmodel = require("../models/canteen.model");
-
-
 //Add canteen
 const create = async (req, res) => {
   try {
@@ -53,6 +51,11 @@ const getcanteen = async (req, res) => {
     if (!canteens) {
       res.status(404).send({ success: false, message: "canteens not found" });
     }
+    res.status(200).json(canteens);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const deletecanteen = async (req, res) => {
     const id = req.params.id;
@@ -108,6 +111,3 @@ module.exports = {
     updatecanteen,
     deletecanteen
 }
-
-    
-
