@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Heading from "../../components/Heading";
+import Heading from "../../../components/Heading";
 import { useNavigate } from "react-router-dom";
+import Button from "../../../components/Button";
 
 const AdminCreateCanteen = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [users, setUsers] = useState([]);
-
   const onInputChange = (e) => {
     setFormData((curData) => {
       return {
@@ -28,7 +28,7 @@ const AdminCreateCanteen = () => {
 
       if (res.ok) {
         const data = await res.json();
-        navigate("../admin-canteens");
+        navigate("./../");
       }
     } catch (error) {
       console.log("error is " + error);
@@ -48,10 +48,8 @@ const AdminCreateCanteen = () => {
         console.log(error);
       }
     };
-
     fetchUsers();
   }, []);
-
   return (
     <div>
       <Heading heading="Canteen" />
@@ -119,12 +117,8 @@ const AdminCreateCanteen = () => {
                 ))}
             </select>
           </div>
-          <button
-            type="submit"
-            className="mt-6 text-xl bg-yellow-600 text-black px-4 py-2 rounded-xl mb-3 border border-yellow-600 transition-colors hover:bg-white"
-          >
-            Create
-          </button>
+
+          <Button type="create" text="Create" />
         </form>
       </div>
     </div>

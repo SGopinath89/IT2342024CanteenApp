@@ -2,6 +2,7 @@ import React from "react";
 import bg from "../assets/images/bg/bg.jpg";
 import logo from "../assets/images/logo.png";
 import { Link } from "react-router-dom";
+import Button from "../components/Button";
 
 const Home = () => {
   return (
@@ -16,21 +17,14 @@ const Home = () => {
         <h1 className="text-8xl font-semibold font-mono text-red-800 mb-8">
           VanniEats
         </h1>
-        <Link
-          to="/register"
-          className="text-xl bg-yellow-600 text-black px-4 py-2 rounded-xl mb-3 border border-yellow-600 transition-colors hover:bg-white"
-        >
-          Register
+        <Link to="/register">
+          <Button text="Register" type="default" />
         </Link>
-        <Link
-          to="/signin"
-          className="text-xl bg-yellow-600 text-black px-4 py-2 rounded-xl mb-3 border border-yellow-600 transition-colors hover:bg-white"
-        >
-          SignIn
+        <Link to="/signin">
+          <Button text="SignIn" type="default" />
         </Link>
       </div>
     </div>
   );
 };
-
 export default Home;

@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
 import Button from "../components/Button";
-
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
@@ -33,9 +32,10 @@ const SignIn = () => {
         console.log(data);
         alert("Login Succcess");
         dispatch(signInSuccess(data));
-        if (data.usertype == "user") navigate("/user-home");
-        if (data.usertype == "staff") navigate("/staff-home");
-        if (data.usertype == "admin") navigate("/admin-home");
+
+        if (data.usertype == "user") navigate("/user");
+        if (data.usertype == "staff") navigate("/staff");
+        if (data.usertype == "admin") navigate("/admin");
       }
     } catch (error) {
       console.log("error is " + error);
@@ -75,7 +75,6 @@ const SignIn = () => {
               onChange={(e) => onInputChange(e)}
             />
           </div>
-
           <Button text="SignIn" type="default" />
         </form>
         <Link to="/register" className="text-blue-900">
