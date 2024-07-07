@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const foodmodel = require("../models/food.model");
 
 const addfood = async (req, res) => {
@@ -18,7 +19,7 @@ const addfood = async (req, res) => {
         .status(500)
         .send({ success: false, message: "Please Provide Fields" });
     }
-  
+    
     const newfood = new foodmodel({
       foodname,
       price,
@@ -26,9 +27,7 @@ const addfood = async (req, res) => {
       availableTime,
       imageurl,
     });
-
     await newfood.save();
-
     res.status(200).send({
       success: true,
       message: "Food Added to the Canteen Successfully",
@@ -43,11 +42,24 @@ const displayfoods = async (req, res) => {
     const food = await foodmodel.find();
     if (!food) {
       res.status(404).send({ success: false, message: "foods not found" });
- 
     }
     res.status(200).json(food);
   } catch (err) {
     console.log(err);
+  }
+};
+
+const displayfoodsByCanteenId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const mongoId = new mongoose.Types.ObjectId(id);
+    const foodsById = await foodmodel.find({ Canteenid: mongoId });
+    if (!foodsById.length) {
+      res.status(404).send({ success: false, message: "foods not found" });
+    }
+    res.status(200).json(foodsById);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -93,7 +105,6 @@ const updatefood = async (req, res) => {
         .send({ success: false, message: "Food is Not Found" });
     }
     const { foodname, price, availableTime, imageurl } = req.body;
-
     await foodmodel.findByIdAndUpdate(
       foodid,
       { foodname, price, availableTime, imageurl },
@@ -113,4 +124,5 @@ module.exports = {
   displayfood,
   deletefood,
   updatefood,
+  displayfoodsByCanteenId,
 };

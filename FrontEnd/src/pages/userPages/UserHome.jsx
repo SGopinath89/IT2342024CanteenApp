@@ -1,34 +1,44 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Heading from "../../components/Heading";
+import Button from "../../components/Button";
 
 const UserHome = () => {
+  const [canteens, setCanteens] = useState([]);
+
   useEffect(() => {
     const fetchCanteens = async () => {
       try {
         const res = await fetch("/api1/canteen/");
-
         if (res.ok) {
           const data = await res.json();
 
           console.log(data);
+          setCanteens(data);
         }
       } catch (error) {
         console.log(error);
       }
     };
-
     fetchCanteens();
   }, []);
   return (
     <div className="min-h-screen flex flex-col items-center">
-      <h2 className="text-3xl my-6">Canteens</h2>
-      <div>
-        <Link
-          to="/signin"
-          className="text-xl bg-yellow-600 text-black px-4 py-2 rounded-xl mb-3 border border-yellow-600 transition-colors hover:bg-white"
-        >
-          Applied
-        </Link>
+      <Heading heading="User Portal" />
+      <div className="flex justify-center">
+        {canteens.map((canteen) => {
+          return (
+            <>
+              <Link
+                to={`./canteen/${canteen.name}`}
+                state={{ canteenId: canteen._id }}
+              >
+                <Button text={canteen.name} type="default" />
+              </Link>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </>
+          );
+        })}
       </div>
     </div>
   );
