@@ -1,6 +1,4 @@
 const canteenmodel = require("../models/canteen.model");
-
-
 //Add canteen
 const create = async (req, res) => {
   try {
@@ -48,11 +46,12 @@ const getcanteen = async (req, res) => {
   const id = req.params.id;
   try {
     let mongoId = new mongoose.Types.ObjectId(id);
-
     const canteens = await canteenmodel.find(mongoId);
     if (!canteens) {
       res.status(404).send({ success: false, message: "canteens not found" });
     }
+  }
+}
 
 const deletecanteen = async (req, res) => {
     const id = req.params.id;
@@ -108,6 +107,3 @@ module.exports = {
     updatecanteen,
     deletecanteen
 }
-
-    
-
