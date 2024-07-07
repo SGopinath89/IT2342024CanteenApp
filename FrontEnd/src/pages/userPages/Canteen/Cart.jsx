@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../../components/Button";
 import Heading from "../../../components/Heading";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeQuantity, removeItem } from "../../../redux/user/cartSlice";
 
 const Cart = () => {
   const columns = ["Food", "Canteen", "Quantity", "Price"];
   const [rows, setRows] = useState([]);
   const { cartItems } = useSelector((state) => state.cart);
 
+const dispatch = useDispatch();
+
+const onQuantityChange = (e) => {
+    dispatch(changeQuantity({ foodId: e.target.id, quantity: e.target.value }));
+  };
+
+const deleteMethod = (id) => {
+    dispatch(removeItem({ foodId: id }));
+    window.location.reload();
+  };
+  
   useEffect(() => {
     const mappedArr = cartItems.map((cartItem) => {
       return {
@@ -23,7 +35,6 @@ const Cart = () => {
     console.log(mappedArr);
   }, [cartItems]);
 
-  const deleteMethod = () => {};
   return (
     <div className="min-h-screen p-4">
       <Heading heading={"Cart"} />
@@ -66,6 +77,8 @@ const Cart = () => {
                             type="number"
                             step={1}
                             defaultValue={row.Quantity}
+                            onChange={(e) => onQuantityChange(e)}
+                            id={row.id}
                           />
                         </div>
                       );
@@ -86,7 +99,7 @@ const Cart = () => {
                     type="delete"
                     id={row.id}
                     onClick={deleteMethod}
-                    exist={deleteMethod ? true : false}
+                  
                   />
                 </div>
               </div>
