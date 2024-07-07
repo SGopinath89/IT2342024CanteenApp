@@ -1,13 +1,12 @@
 import React from "react";
 import Button from "./Button";
-
 const Table = ({ columns, rows, deleteMethod, editMethod }) => {
   return (
     <div className="w-full p-4 border border-zinc-200 rounded-md">
       <div className="flex justify-around">
         {columns.map((column, ind) => (
           <div
-             className="flex-1 shrink-0 text-start font-bold text-2xl"
+            className="flex-1 shrink-0 text-start font-bold text-2xl"
             key={ind}
           >
             {column}
@@ -21,7 +20,7 @@ const Table = ({ columns, rows, deleteMethod, editMethod }) => {
         {rows.map((row, ind) => {
           return (
             <div key={ind} className="flex justify-around items-center">
-               <div
+              <div
                 style={{
                   maxWidth: `${
                     (100 / columns.length) * (columns.length - 1)
@@ -44,13 +43,15 @@ const Table = ({ columns, rows, deleteMethod, editMethod }) => {
                   type="edit"
                   id={row.id}
                   onClick={editMethod}
+                  exist={editMethod ? true : false}
                 />
-                 &nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp;
                 <Button
                   text="Delete"
                   type="delete"
                   id={row.id}
                   onClick={deleteMethod}
+                  exist={deleteMethod ? true : false}
                 />
               </div>
             </div>
@@ -60,5 +61,4 @@ const Table = ({ columns, rows, deleteMethod, editMethod }) => {
     </div>
   );
 };
-
 export default Table;
