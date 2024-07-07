@@ -68,7 +68,11 @@ const Canteen = () => {
   return (
     <div className="min-h-screen">
       <Heading heading={name} />
-      <Link to="./../../cart" className="absolute right-5 top-5">
+      <Link
+        to={`./../../cart/${name}`}
+        state={{ canteenId }}
+        className="absolute right-5 top-5"
+      >
         <Button text="My Cart" type="default" />
       </Link>
       <div className="h-full p-8 flex">

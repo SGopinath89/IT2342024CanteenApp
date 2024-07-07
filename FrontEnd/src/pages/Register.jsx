@@ -44,7 +44,7 @@ const Register = () => {
       <div className="size-36 absolute left-5 top-5">
         <img src={logo} alt="logo" className="w-full h-full" />
       </div>
-      <div className="absolute left-1/4 top-1/3 flex flex-col items-center  w-1/5 p-5">
+      <div className="absolute left-1/4 top-1/3 flex flex-col items-center  w-2/5 max-w-[30vw] p-5">
         <h2 className="text-3xl mb-6">Register Here..</h2>
         <form onSubmit={(e) => onSubmitForm(e)} className="w-full text-lg">
           <div className="flex justify-between mb-2">

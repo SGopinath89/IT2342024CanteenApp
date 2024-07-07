@@ -38,7 +38,9 @@ const create = async (req, res) => {
       description,
       adminid,
     });
+
     await newcanteen.save();
+
     res.status(200).send({
       success: true,
       message: "Canteen Added Successfully",
@@ -50,7 +52,6 @@ const create = async (req, res) => {
 };
 
 const getcanteens = async (req, res) => {
-  console.log(req.query.type);
   try {
     const canteens = await canteenmodel.find();
     if (!canteens) {
@@ -68,6 +69,8 @@ const getcanteenByStaff = async (req, res) => {
     let mongoId = new mongoose.Types.ObjectId(id);
 
     const canteens = await canteenmodel.find({ adminid: mongoId });
+    console.log(canteens);
+
     if (!canteens) {
       res.status(404).send({ success: false, message: "canteens not found" });
     }
@@ -78,10 +81,10 @@ const getcanteenByStaff = async (req, res) => {
 };
 
 const getcanteen = async (req, res) => {
-  console.log(req.query.type);
   const id = req.params.id;
   try {
-    const canteens = await canteenmodel.find(id);
+    let mongoId = new mongoose.Types.ObjectId(id);
+    const canteens = await canteenmodel.find(mongoId);
     if (!canteens) {
       res.status(404).send({ success: false, message: "canteens not found" });
     }
@@ -93,7 +96,6 @@ const getcanteen = async (req, res) => {
 
 const deletecanteen = async (req, res) => {
   const id = req.params.id;
-  console.log(id);
   try {
     let mongoId = new mongoose.Types.ObjectId(id);
 
@@ -119,7 +121,7 @@ const updatecanteen = async (req, res) => {
         message: "No food id was found, Provide food id",
       });
     }
-    const canteen = await foodmodel.findById(canteenId);
+    const canteen = await canteenmodel.findById(canteenId);
     if (!canteen) {
       return res
         .status(404)
@@ -127,14 +129,14 @@ const updatecanteen = async (req, res) => {
     }
     const { name, opentime, closetime, description } = req.body;
 
-    const updatefood = await foodmodel.findByIdAndUpdate(
+    const updatefood = await canteenmodel.findByIdAndUpdate(
       canteenId,
       { name, opentime, closetime, description },
       { new: true }
     );
     res
       .status(200)
-      .send({ success: true, message: " Food was updated Successfully" });
+      .send({ success: true, message: " Canteen was updated Successfully" });
   } catch (err) {
     console.log(err);
   }
