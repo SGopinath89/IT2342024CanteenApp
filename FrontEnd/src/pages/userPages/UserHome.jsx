@@ -26,9 +26,9 @@ const UserHome = () => {
     <div className="min-h-screen flex flex-col items-center">
       <Heading heading="User Portal" />
       <div className="flex justify-center">
-        {canteens.map((canteen) => {
+        {canteens.map((canteen, ind) => {
           return (
-            <>
+            <div key={ind}>
               <Link
                 to={`./canteen/${canteen.name}`}
                 state={{ canteenId: canteen._id }}
@@ -36,7 +36,7 @@ const UserHome = () => {
                 <Button text={canteen.name} type="default" />
               </Link>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </>
+            </div>
           );
         })}
       </div>
