@@ -1,26 +1,22 @@
+const canteenmodel = require("../models/canteen.model");
 const ordermodel = require("../models/order.model");
+const mongoose = require("mongoose");
 
 const placeorder = async (req, res) => {
   try {
-    const { canteenid, cart } = req.body;
+    const { canteenid, foods, payment, buyer } = req.body;
     //validation
-    if (!canteenid || !cart) {
+    if (!canteenid || !foods || !payment || !buyer) {
       return res.status(500).send({
         success: false,
         message: "Please food Cart",
       });
     }
-    let total = 0;
-    //calculate
-    cart.map((i) => {
-      total = total + i.price * i.count;
-    });
-
     const neworder = new ordermodel({
-      canteenid,
-      foods: cart,
-      payment: total,
-      buyer: req.body.id,
+      canteenid: new mongoose.Types.ObjectId(canteenid),
+      foods,
+      payment,
+      buyer: new mongoose.Types.ObjectId(buyer),
     });
     await neworder.save();
     res
@@ -96,16 +92,16 @@ const deleteorder = async (req, res) => {
 };
 
 const displayorders = async (req, res) => {
-  console.log(req.query.type);
   try {
     // Convert string to ObjectId
     const canteen = await canteenmodel.aggregate([
-      { $match:{admin:req.user.id}},
+      { $match: { adminid: new mongoose.Types.ObjectId(req.user.id) } },
     ]);
-    const canteenId = canteen._id;
+    const canteenId = canteen[0]._id;
     const orders = await ordermodel.aggregate([
       { $match: { canteenid: canteenId } },
     ]);
+
     if (!orders) {
       res.status(404).send({ success: true, message: "orders not found" });
     }
@@ -120,10 +116,9 @@ const displayorder = async (req, res) => {
   try {
     // Convert string to ObjectId
     const canteen = await canteenmodel.aggregate([
-      { $match:{admin:req.user.id}},
+      { $match: { admin: req.user.id } },
     ]);
     const orders = await ordermodel.findById(id);
-    
     if (!orders) {
       res.status(404).send({ success: true, message: "orders not found" });
     }
@@ -138,5 +133,5 @@ module.exports = {
   updateorder,
   deleteorder,
   displayorders,
-  displayorder
-}
+  displayorder,
+};

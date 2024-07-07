@@ -3,13 +3,15 @@ import Button from "../../../components/Button";
 import Heading from "../../../components/Heading";
 import { useDispatch, useSelector } from "react-redux";
 import { changeQuantity, removeItem } from "../../../redux/user/cartSlice";
-
+import { Link, useLocation } from "react-router-dom";
 const Cart = () => {
-  const columns = ["Food", "Canteen", "Quantity", "Price"];
+  const columns = ["Food", "Canteen", "Quantity", "Unit Price"];
   const [rows, setRows] = useState([]);
   const { cartItems } = useSelector((state) => state.cart);
 
 const dispatch = useDispatch();
+const { canteenId } = useLocation().state;
+console.log();
 
 const onQuantityChange = (e) => {
     dispatch(changeQuantity({ foodId: e.target.id, quantity: e.target.value }));
@@ -21,15 +23,17 @@ const deleteMethod = (id) => {
   };
   
   useEffect(() => {
-    const mappedArr = cartItems.map((cartItem) => {
-      return {
-        id: cartItem.foodId,
-        Food: cartItem.foodName,
-        Canteen: cartItem.canteenName,
-        Quantity: cartItem.quantity,
-        Price: cartItem.foodPrice,
-      };
-    });
+    const mappedArr = cartItems
+      .filter((item) => item.canteenId == canteenId)
+      .map((cartItem) => {
+        return {
+          id: cartItem.foodId,
+          Food: cartItem.foodName,
+          Canteen: cartItem.canteenName,
+          Quantity: cartItem.quantity,
+          "Unit Price": cartItem.foodPrice,
+        };
+      });
 
     setRows(mappedArr);
     console.log(mappedArr);
@@ -38,7 +42,7 @@ const deleteMethod = (id) => {
   return (
     <div className="min-h-screen p-4">
       <Heading heading={"Cart"} />
-      <div className="w-full p-4 border border-zinc-200 rounded-md h-[65vh]">
+      <div className="w-full p-4 border border-zinc-200 rounded-md h-[65vh] ">
         <div className="flex justify-around">
           {columns.map((column, ind) => (
             <div
@@ -107,6 +111,11 @@ const deleteMethod = (id) => {
           })}
         </div>
       </div>
+      <h1 className="text-right">
+        <Link to="./../../order" state={{ canteenId }}>
+          <Button text="Make Order" type="default" />
+        </Link>
+      </h1>
     </div>
   );
 };
