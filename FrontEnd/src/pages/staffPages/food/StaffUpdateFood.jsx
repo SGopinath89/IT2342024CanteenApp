@@ -3,32 +3,41 @@ import Heading from "../../../components/Heading";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../../components/Button";
 import { useSelector } from "react-redux";
-import bread from "./../../../assets/images/foods/bread.jpg";
-import dosa from "./../../../assets/images/foods/dosa.png";
-import friedrice from "./../../../assets/images/foods/friedrice.webp";
-import idly from "./../../../assets/images/foods/idly.png";
-import kottu from "./../../../assets/images/foods/kottu.webp";
-import macaroni from "./../../../assets/images/foods/macaroni.jpeg";
-import milkrice from "./../../../assets/images/foods/milkrice.jpeg";
-import milktea from "./../../../assets/images/foods/milktea.jpg";
-import pancake from "./../../../assets/images/foods/pancake.webp";
-import parata from "./../../../assets/images/foods/parata.avif";
-import plaintea from "./../../../assets/images/foods/plaintea.png";
-import riceandcurry from "./../../../assets/images/foods/riceandcurry.jpg";
-import rolls from "./../../../assets/images/foods/rolls.png";
-import roti from "./../../../assets/images/foods/roti.png";
-import samosa from "./../../../assets/images/foods/samosa.png";
-import stringhoppers from "./../../../assets/images/foods/stringhoppers.jpg";
-import ulunduwade from "./../../../assets/images/foods/ulunduwade.webp";
-import wade from "./../../../assets/images/foods/wade.jpg";
+import bread from "./../../../../public/foods/bread.jpg";
+import dosa from "./../../../../public/foods/dosa.png";
+import friedrice from "./../../../../public/foods/friedrice.webp";
+import idly from "./../../../../public/foods/idly.png";
+import kottu from "./../../../../public/foods/kottu.webp";
+import macaroni from "./../../../../public/foods/macaroni.jpeg";
+import milkrice from "./../../../../public/foods/milkrice.jpeg";
+import milktea from "./../../../../public/foods/milktea.jpg";
+import pancake from "./../../../../public/foods/pancake.webp";
+import parata from "./../../../../public/foods/parata.avif";
+import plaintea from "./../../../../public/foods/plaintea.png";
+import riceandcurry from "./../../../../public/foods/riceandcurry.jpg";
+import rolls from "./../../../../public/foods/rolls.png";
+import roti from "./../../../../public/foods/roti.png";
+import samosa from "./../../../../public/foods/samosa.png";
+import stringhoppers from "./../../../../public/foods/stringhoppers.jpg";
+import ulunduwade from "./../../../../public/foods/ulunduwade.webp";
+import wade from "./../../../../public/foods/wade.jpg";
 
 const StaffUpdateFood = () => {
   const navigate = useNavigate();
+
+    
+          
+            
+    
+
+          
+          Expand Down
+    
+    
+  
   const { id } = useParams();
   const { _id } = useSelector((state) => state.user.currentUser);
-
   const availableTime = ["Breakfast", "Lunch", "Dinner", "Always"];
-
   const foodItems = [
     { name: "Bread", imageurl: bread },
     { name: "Dosa", imageurl: dosa },
@@ -49,7 +58,6 @@ const StaffUpdateFood = () => {
     { name: "Ulundu Wade", imageurl: ulunduwade },
     { name: "Wade", imageurl: wade },
   ];
-
   const [formData, setFormData] = useState({
     foodname: "",
     price: "",
@@ -58,16 +66,13 @@ const StaffUpdateFood = () => {
     Canteenid: "",
   });
   const [users, setUsers] = useState([]);
-
   useEffect(() => {
     const fetchIntialFormData = async () => {
       try {
         const res = await fetch(`/api1/foods/${id}`);
-
         if (res.ok) {
           const data = await res.json();
           console.log(data);
-
           const { foodname, price, availableTime, imageurl } = data;
           setFormData({ foodname, price, availableTime, imageurl });
         }
@@ -75,14 +80,12 @@ const StaffUpdateFood = () => {
         console.log(error);
       }
     };
-
     fetchIntialFormData();
   }, []);
   useEffect(() => {
     const getCanteenId = async () => {
       try {
         const res = await fetch(`/api1/canteen/staff/${_id}`);
-
         if (res.ok) {
           const data = await res.json();
           console.log(data[0]._id);
@@ -99,44 +102,38 @@ const StaffUpdateFood = () => {
         console.log(error);
       }
     };
-
     getCanteenId();
   }, [_id]);
-
   const onInputChange = (e) => {
-   
     setFormData((curData) => {
-        if (e.target.id == "foodname") {
-            return {
-              ...curData,
-              [e.target.id]: e.target.value,
-              imageurl: foodItems.find(
-                (food) =>
-                  food.name.toLowerCase().split(" ").join("") == e.target.value
-              ).imageurl,
-            };
-          } else {
-            return {
-              ...curData,
-              [e.target.id]: e.target.value,
-            };
-          }
+      if (e.target.id == "foodname") {
+        return {
+          ...curData,
+          [e.target.id]: e.target.value,
+          imageurl: foodItems.find(
+            (food) =>
+              food.name.toLowerCase().split(" ").join("") == e.target.value
+          ).imageurl,
+        };
+      } else {
+        return {
+          ...curData,
+          [e.target.id]: e.target.value,
+        };
+      }
     });
   };
-
   const onFormSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
     try {
-        const res = await fetch(`/api1/foods/${id}`, {
+      const res = await fetch(`/api1/foods/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-
         body: JSON.stringify(formData),
       });
-
       if (res.ok) {
         const data = await res.json();
         console.log(data);
@@ -147,8 +144,6 @@ const StaffUpdateFood = () => {
       alert("canteen updating failed");
     }
   };
-
-
   return (
     <div>
       <Heading heading="Update" />
@@ -164,33 +159,33 @@ const StaffUpdateFood = () => {
               id="foodname"
               onChange={(e) => onInputChange(e)}
               value={formData.foodname}
-              >
-                <option value="0">Select Food Item</option>
-                {foodItems.map((food, ind) => (
-                  <option
-                    key={ind}
-                    value={food.name.toLowerCase().split(" ").join("")}
-                  >
-                    {food.name}
-                  </option>
-                ))}
-              </select>
+            >
+              <option value="0">Select Food Item</option>
+              {foodItems.map((food, ind) => (
+                <option
+                  key={ind}
+                  value={food.name.toLowerCase().split(" ").join("")}
+                >
+                  {food.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex justify-between mb-2">
-          <label className="inline-block" htmlFor="price">
-          Price
+            <label className="inline-block" htmlFor="price">
+              Price
             </label>
             <input
               className="w-64 outline-none border border-yellow-600 rounded-md px-3 py-1"
-             type="text"
+              type="text"
               id="price"
               onChange={(e) => onInputChange(e)}
               value={formData.price}
             />
           </div>
           <div className="flex justify-between mb-2">
-          <label className="inline-block" htmlFor="availableTime">
-          Available Time
+            <label className="inline-block" htmlFor="availableTime">
+              Available Time
             </label>
             <select
               className="w-64 outline-none border border-yellow-600 rounded-md px-3 py-1"
@@ -207,7 +202,7 @@ const StaffUpdateFood = () => {
                 >
                   {time}
                 </option>
-              ))} 
+              ))}
             </select>
           </div>
           <div className="flex justify-between mb-2">
@@ -229,5 +224,4 @@ const StaffUpdateFood = () => {
     </div>
   );
 };
-
 export default StaffUpdateFood;
