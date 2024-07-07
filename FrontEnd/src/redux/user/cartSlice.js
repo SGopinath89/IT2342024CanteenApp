@@ -19,7 +19,6 @@ const cartSlice = createSlice({
         state.cartItems.push(action.payload);
       }
     },
-
     orderFinished: (state) => {
       state.cartItems = [];
     },
@@ -39,9 +38,17 @@ const cartSlice = createSlice({
         state.cartItems.splice(index, 1);
       }
     },
+    destroyCart: (state) => {
+      state.cartItems = [];
+    },
   },
 });
 
-export const { addToCart, orderFinished, changeQuantity, removeItem } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  orderFinished,
+  changeQuantity,
+  removeItem,
+  destroyCart,
+} = cartSlice.actions;
 export default cartSlice.reducer;

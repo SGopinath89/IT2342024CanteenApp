@@ -3,6 +3,8 @@ import Heading from "../../../components/Heading";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { orderFinished } from "../../../redux/user/cartSlice";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
 
 const Order = () => {
   const columns = ["Item", "Quantity", "Price"];
@@ -76,6 +78,8 @@ const Order = () => {
 
   return (
     <div className="min-h-screen">
+      <BackButton to="./../" />
+      <LogoutButton />
       <Heading heading="Your Order" />
       <div className="flex justify-center">
         <div className="w-2/5 min-h-96 border border-yellow-600 rounded-lg">

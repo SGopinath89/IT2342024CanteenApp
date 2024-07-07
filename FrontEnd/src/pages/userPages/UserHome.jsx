@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Heading from "../../components/Heading";
 import Button from "../../components/Button";
+import LogoutButton from "../../components/LogoutButton";
 
 const UserHome = () => {
   const [canteens, setCanteens] = useState([]);
@@ -10,6 +11,7 @@ const UserHome = () => {
     const fetchCanteens = async () => {
       try {
         const res = await fetch("/api1/canteen/");
+
         if (res.ok) {
           const data = await res.json();
 
@@ -20,10 +22,12 @@ const UserHome = () => {
         console.log(error);
       }
     };
+
     fetchCanteens();
   }, []);
   return (
     <div className="min-h-screen flex flex-col items-center">
+      <LogoutButton />
       <Heading heading="User Portal" />
       <div className="flex justify-center">
         {canteens.map((canteen, ind) => {

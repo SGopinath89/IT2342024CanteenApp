@@ -3,9 +3,12 @@ import Heading from "../../../components/Heading";
 import Button from "../../../components/Button";
 import Table from "../../../components/Table";
 import { Link, useNavigate } from "react-router-dom";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
 
 const AdminCanteens = () => {
   const navigate = useNavigate();
+
   const columns = ["Name", "Description", "Open Time", "Close Time"];
   const [rows, setRows] = useState([]);
 
@@ -25,15 +28,18 @@ const AdminCanteens = () => {
             "Close Time": canteen.closetime,
           };
         });
+
         setRows(mapedArray);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   const deleteMethod = async (id) => {
     try {
       const res = await fetch(`/api1/canteen/${id}`, { method: "DELETE" });
+
       if (res.ok) {
         console.log("deleted");
         fetchCanteens();
@@ -48,12 +54,13 @@ const AdminCanteens = () => {
   };
 
   useEffect(() => {
-    
     fetchCanteens();
   }, []);
 
   return (
     <div>
+      <BackButton to="./../" />
+      <LogoutButton />
       <Heading heading="Canteen" />
 
       <div className="flex flex-col items-end p-5">
@@ -70,4 +77,5 @@ const AdminCanteens = () => {
     </div>
   );
 };
+
 export default AdminCanteens;

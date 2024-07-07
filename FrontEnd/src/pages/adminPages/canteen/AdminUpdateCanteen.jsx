@@ -2,25 +2,30 @@ import React, { useEffect, useState } from "react";
 import Heading from "../../../components/Heading";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../../components/Button";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
+
 const AdminUpdateCanteen = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
-    
     name: "",
     description: "",
     closetime: "",
     opentime: "",
   });
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
     const fetchIntialFormData = async () => {
       try {
         const res = await fetch(`/api1/canteen/${id}`);
+
         if (res.ok) {
           const data = await res.json();
           console.log(data);
+
           const { name, description, closetime, opentime } = data[0];
           setFormData({ name, description, closetime, opentime });
         }
@@ -28,8 +33,10 @@ const AdminUpdateCanteen = () => {
         console.log(error);
       }
     };
+
     fetchIntialFormData();
   }, []);
+
   const onInputChange = (e) => {
     console.log(formData);
     setFormData((curData) => {
@@ -39,6 +46,7 @@ const AdminUpdateCanteen = () => {
       };
     });
   };
+
   const onFormSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -47,8 +55,10 @@ const AdminUpdateCanteen = () => {
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify(formData),
       });
+
       if (res.ok) {
         const data = await res.json();
         console.log(data);
@@ -59,10 +69,12 @@ const AdminUpdateCanteen = () => {
       alert("canteen updating failed");
     }
   };
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const res = await fetch("/api1/user/");
+
         if (res.ok) {
           const data = await res.json();
           console.log(data);
@@ -72,10 +84,14 @@ const AdminUpdateCanteen = () => {
         console.log(error);
       }
     };
+
     fetchUsers();
   }, []);
+
   return (
     <div>
+      <BackButton to="./../../" />
+      <LogoutButton />
       <Heading heading="Canteen" />
       <div className="flex justify-center">
         <form onSubmit={(e) => onFormSubmit(e)} className="w-1/3 text-lg">
@@ -145,10 +161,12 @@ const AdminUpdateCanteen = () => {
                 ))}
             </select>
           </div>
+
           <Button type="edit" text="Update" />
         </form>
       </div>
     </div>
   );
 };
+
 export default AdminUpdateCanteen;

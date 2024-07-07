@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import Heading from "../../../components/Heading";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
 
 const AdminCreateCanteen = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [users, setUsers] = useState([]);
+
   const onInputChange = (e) => {
     setFormData((curData) => {
       return {
@@ -23,6 +26,7 @@ const AdminCreateCanteen = () => {
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify(formData),
       });
 
@@ -35,10 +39,12 @@ const AdminCreateCanteen = () => {
       alert("canteen creation failed");
     }
   };
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const res = await fetch("/api1/user/");
+
         if (res.ok) {
           const data = await res.json();
           console.log(data);
@@ -48,10 +54,14 @@ const AdminCreateCanteen = () => {
         console.log(error);
       }
     };
+
     fetchUsers();
   }, []);
+
   return (
     <div>
+      <BackButton to="./../" />
+      <LogoutButton />
       <Heading heading="Canteen" />
       <div className="flex justify-center">
         <form onSubmit={(e) => onFormSubmit(e)} className="w-1/3 text-lg">
@@ -124,4 +134,5 @@ const AdminCreateCanteen = () => {
     </div>
   );
 };
+
 export default AdminCreateCanteen;

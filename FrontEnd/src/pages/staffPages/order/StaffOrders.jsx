@@ -3,6 +3,8 @@ import Heading from "../../../components/Heading";
 import Table from "../../../components/Table";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
 
 const StaffOrders = () => {
   const navigate = useNavigate();
@@ -43,7 +45,7 @@ const StaffOrders = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
-        });    
+        });
 
         if (res.ok) {
           const data = await res.json();
@@ -65,15 +67,17 @@ const StaffOrders = () => {
       } catch (error) {
         console.log(error);
       }
-    
     }
   };
+
   useEffect(() => {
-  fetchOrders();
+    fetchOrders();
   }, [formData]);
 
   return (
     <div className="min-h-screen">
+      <BackButton to="./../" />
+      <LogoutButton />
       <Heading heading="Arrived Orders" />
       <div className="flex justify-center">
         <div className="w-full min-h-96 border border-yellow-600 rounded-lg">

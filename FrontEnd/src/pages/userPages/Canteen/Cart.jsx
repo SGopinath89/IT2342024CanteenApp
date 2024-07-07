@@ -4,24 +4,26 @@ import Heading from "../../../components/Heading";
 import { useDispatch, useSelector } from "react-redux";
 import { changeQuantity, removeItem } from "../../../redux/user/cartSlice";
 import { Link, useLocation } from "react-router-dom";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
+
 const Cart = () => {
   const columns = ["Food", "Canteen", "Quantity", "Unit Price"];
   const [rows, setRows] = useState([]);
   const { cartItems } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const { canteenId } = useLocation().state;
+  console.log();
 
-const dispatch = useDispatch();
-const { canteenId } = useLocation().state;
-console.log();
-
-const onQuantityChange = (e) => {
+  const onQuantityChange = (e) => {
     dispatch(changeQuantity({ foodId: e.target.id, quantity: e.target.value }));
   };
 
-const deleteMethod = (id) => {
+  const deleteMethod = (id) => {
     dispatch(removeItem({ foodId: id }));
     window.location.reload();
   };
-  
+
   useEffect(() => {
     const mappedArr = cartItems
       .filter((item) => item.canteenId == canteenId)
@@ -41,6 +43,8 @@ const deleteMethod = (id) => {
 
   return (
     <div className="min-h-screen p-4">
+      <BackButton to="./../../" />
+      <LogoutButton />
       <Heading heading={"Cart"} />
       <div className="w-full p-4 border border-zinc-200 rounded-md h-[65vh] ">
         <div className="flex justify-around">
@@ -103,7 +107,6 @@ const deleteMethod = (id) => {
                     type="delete"
                     id={row.id}
                     onClick={deleteMethod}
-                  
                   />
                 </div>
               </div>

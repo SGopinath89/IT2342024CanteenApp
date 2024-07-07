@@ -21,12 +21,16 @@ import samosa from "./../../../../public/foods/samosa.png";
 import stringhoppers from "./../../../../public/foods/stringhoppers.jpg";
 import ulunduwade from "./../../../../public/foods/ulunduwade.webp";
 import wade from "./../../../../public/foods/wade.jpg";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
 
 const StaffUpdateFood = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { _id } = useSelector((state) => state.user.currentUser);
+
   const availableTime = ["Breakfast", "Lunch", "Dinner", "Always"];
+
   const foodItems = [
     { name: "Bread", imageurl: bread },
     { name: "Dosa", imageurl: dosa },
@@ -47,6 +51,7 @@ const StaffUpdateFood = () => {
     { name: "Ulundu Wade", imageurl: ulunduwade },
     { name: "Wade", imageurl: wade },
   ];
+
   const [formData, setFormData] = useState({
     foodname: "",
     price: "",
@@ -55,13 +60,16 @@ const StaffUpdateFood = () => {
     Canteenid: "",
   });
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
     const fetchIntialFormData = async () => {
       try {
         const res = await fetch(`/api1/foods/${id}`);
+
         if (res.ok) {
           const data = await res.json();
           console.log(data);
+
           const { foodname, price, availableTime, imageurl } = data;
           setFormData({ foodname, price, availableTime, imageurl });
         }
@@ -69,12 +77,15 @@ const StaffUpdateFood = () => {
         console.log(error);
       }
     };
+
     fetchIntialFormData();
   }, []);
+
   useEffect(() => {
     const getCanteenId = async () => {
       try {
         const res = await fetch(`/api1/canteen/staff/${_id}`);
+
         if (res.ok) {
           const data = await res.json();
           console.log(data[0]._id);
@@ -91,8 +102,10 @@ const StaffUpdateFood = () => {
         console.log(error);
       }
     };
+
     getCanteenId();
   }, [_id]);
+
   const onInputChange = (e) => {
     setFormData((curData) => {
       if (e.target.id == "foodname") {
@@ -112,6 +125,7 @@ const StaffUpdateFood = () => {
       }
     });
   };
+
   const onFormSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
@@ -121,8 +135,10 @@ const StaffUpdateFood = () => {
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify(formData),
       });
+
       if (res.ok) {
         const data = await res.json();
         console.log(data);
@@ -133,8 +149,11 @@ const StaffUpdateFood = () => {
       alert("canteen updating failed");
     }
   };
+
   return (
     <div>
+      <BackButton to="./../../" />
+      <LogoutButton />
       <Heading heading="Update" />
       <div className="flex justify-center">
         <form onSubmit={(e) => onFormSubmit(e)} className="w-1/3 text-lg">
@@ -207,6 +226,7 @@ const StaffUpdateFood = () => {
               />
             </div>
           </div>
+
           <Button type="edit" text="Update" />
         </form>
       </div>

@@ -22,17 +22,22 @@ import samosa from "./../../../../public/foods/samosa.png";
 import stringhoppers from "./../../../../public/foods/stringhoppers.jpg";
 import ulunduwade from "./../../../../public/foods/ulunduwade.webp";
 import wade from "./../../../../public/foods/wade.jpg";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
 
 const StaffFood = () => {
   const navigate = useNavigate();
+
   const columns = ["Name", "Image", "Price", "AvailableTime"];
   const [rows, setRows] = useState([]);
   const [formData, setFormData] = useState({});
   const { _id } = useSelector((state) => state.user.currentUser);
+
   useEffect(() => {
     const getCanteenId = async () => {
       try {
         const res = await fetch(`/api1/canteen/staff/${_id}`);
+
         if (res.ok) {
           const data = await res.json();
           console.log(data);
@@ -47,8 +52,10 @@ const StaffFood = () => {
         console.log(error);
       }
     };
+
     getCanteenId();
   }, [_id]);
+
   const foodItems = [
     { name: "Bread", imageurl: bread },
     { name: "Dosa", imageurl: dosa },
@@ -69,9 +76,11 @@ const StaffFood = () => {
     { name: "Ulundu Wade", imageurl: ulunduwade },
     { name: "Wade", imageurl: wade },
   ];
+
   const fetchFoods = async () => {
     try {
       const res = await fetch("/api1/foods/");
+
       if (res.ok) {
         const data = await res.json();
         console.log(data);
@@ -100,12 +109,14 @@ const StaffFood = () => {
             AvailableTime: food.availableTime,
           };
         });
+
         setRows(mapedArray);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   const deleteMethod = async (id) => {
     try {
       const res = await fetch(`/api1/foods/${id}`, {
@@ -113,6 +124,7 @@ const StaffFood = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
       if (res.ok) {
         console.log("deleted");
         fetchFoods();
@@ -121,15 +133,21 @@ const StaffFood = () => {
       console.log(error);
     }
   };
+
   const editMethod = async (id) => {
     navigate(`./update/${id}`);
   };
+
   useEffect(() => {
     fetchFoods();
   }, []);
+
   return (
     <div>
+      <BackButton to="./../" />
+      <LogoutButton />
       <Heading heading="Foods" />
+
       <div className="flex flex-col items-end p-5">
         <Link to="./create">
           <Button text="Create" type="create" />

@@ -21,13 +21,17 @@ import samosa from "./../../../../public/foods/samosa.png";
 import stringhoppers from "./../../../../public/foods/stringhoppers.jpg";
 import ulunduwade from "./../../../../public/foods/ulunduwade.webp";
 import wade from "./../../../../public/foods/wade.jpg";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
 
 const StaffCreateFood = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [users, setUsers] = useState([]);
   const { _id } = useSelector((state) => state.user.currentUser);
+
   const availableTime = ["Breakfast", "Lunch", "Dinner", "Always"];
+
   const foodItems = [
     { name: "Bread", imageurl: bread },
     { name: "Dosa", imageurl: dosa },
@@ -48,10 +52,12 @@ const StaffCreateFood = () => {
     { name: "Ulundu Wade", imageurl: ulunduwade },
     { name: "Wade", imageurl: wade },
   ];
+
   useEffect(() => {
     const getCanteenId = async () => {
       try {
         const res = await fetch(`/api1/canteen/staff/${_id}`);
+
         if (res.ok) {
           const data = await res.json();
           console.log(data);
@@ -66,8 +72,10 @@ const StaffCreateFood = () => {
         console.log(error);
       }
     };
+
     getCanteenId();
   }, [_id]);
+
   const onInputChange = (e) => {
     setFormData((curData) => {
       if (e.target.id == "foodname") {
@@ -98,6 +106,7 @@ const StaffCreateFood = () => {
         },
         body: JSON.stringify(formData),
       });
+
       if (res.ok) {
         const data = await res.json();
         navigate("./../");
@@ -107,8 +116,11 @@ const StaffCreateFood = () => {
       alert("canteen creation failed");
     }
   };
+
   return (
     <div>
+      <BackButton to="./../" />
+      <LogoutButton />
       <Heading heading="Create" />
       <div className="flex justify-center">
         <form onSubmit={(e) => onFormSubmit(e)} className="w-1/3 text-lg">
@@ -178,6 +190,7 @@ const StaffCreateFood = () => {
               />
             </div>
           </div>
+
           <Button type="create" text="Create" />
         </form>
       </div>

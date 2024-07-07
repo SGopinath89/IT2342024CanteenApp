@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Heading from "../../../components/Heading";
 import Table from "../../../components/Table";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
 
 const AdminUsers = () => {
   const navigate = useNavigate();
@@ -52,6 +54,8 @@ const AdminUsers = () => {
 
   return (
     <div>
+      <BackButton to="./../" />
+      <LogoutButton />
       <Heading heading="Users" />
 
       <div className="flex flex-col items-end p-5">

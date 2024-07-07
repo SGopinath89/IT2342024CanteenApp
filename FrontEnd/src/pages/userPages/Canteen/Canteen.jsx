@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Heading from "../../../components/Heading";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../../../../../VanniEats/FrontEnd/src/redux/user/cartSlice";
+import { addToCart } from "../../../redux/user/cartSlice";
 import Button from "../../../components/Button";
+import BackButton from "../../../components/BackButton";
+import LogoutButton from "../../../components/LogoutButton";
 
 const Canteen = () => {
   const { canteenId } = useLocation().state;
@@ -49,7 +51,6 @@ const Canteen = () => {
 
   useEffect(() => {
     const fetchFoods = async () => {
-  
       try {
         const res = await fetch(`/api1/foods/canteen/${canteenId}`);
 
@@ -68,10 +69,12 @@ const Canteen = () => {
   return (
     <div className="min-h-screen">
       <Heading heading={name} />
+      <BackButton to="./../../" />
+      <LogoutButton />
       <Link
         to={`./../../cart/${name}`}
         state={{ canteenId }}
-        className="absolute right-5 top-5"
+        className="absolute right-32 -top-1"
       >
         <Button text="My Cart" type="default" />
       </Link>
@@ -82,7 +85,7 @@ const Canteen = () => {
           return (
             <div
               key={ind}
-                className="w-60 h-72 border border-yellow-600 rounded-md overflow-hidden m-4"
+              className="w-60 h-72 border border-yellow-600 rounded-md overflow-hidden m-4"
             >
               <div className="w-60 h-48">
                 <img
