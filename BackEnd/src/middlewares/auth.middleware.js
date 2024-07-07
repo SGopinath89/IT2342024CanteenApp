@@ -3,7 +3,7 @@ const usermodule = require("../models/user.model");
 const canteenservices = require("../services/canteen.services");
 
 const verifyToken = async (req, res, next) => {
-  console.log(req.cookies);
+ 
   const token = req.cookies["authorization"];
 
   if (!token) {

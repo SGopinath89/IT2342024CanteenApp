@@ -1,8 +1,9 @@
 import React from "react";
 
-const Button = ({ text, type }) => {
+const Button = ({ text, type, onClick = null, id }) => {
   return (
     <button
+    onClick={onClick ? () => onClick(id) : undefined}
       type="submit"
       className={`mt-6 ${
         type == "default"
