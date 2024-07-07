@@ -24,17 +24,6 @@ import wade from "./../../../../public/foods/wade.jpg";
 
 const StaffUpdateFood = () => {
   const navigate = useNavigate();
-
-    
-          
-            
-    
-
-          
-          Expand Down
-    
-    
-  
   const { id } = useParams();
   const { _id } = useSelector((state) => state.user.currentUser);
   const availableTime = ["Breakfast", "Lunch", "Dinner", "Always"];
