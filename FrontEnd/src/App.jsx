@@ -6,7 +6,7 @@ import SignIn from "./pages/SignIn";
 import UserHome from "./pages/userPages/UserHome";
 import StaffHome from "./pages/staffPages/StaffHome";
 import AdminHome from "./pages/adminPages/AdminHome";
-import AdminUsers from "./pages/adminPages/AdminUsers";
+import AdminUsers from "./pages/adminPages/user/AdminUsers";
 import AdminCanteens from "./pages/adminPages/canteen/AdminCanteens";
 import AdminCreateCanteen from "./pages/adminPages/canteen/AdminCreateCanteen";
 import AdminUpdateCanteen from "./pages/adminPages/canteen/AdminUpdateCanteen";

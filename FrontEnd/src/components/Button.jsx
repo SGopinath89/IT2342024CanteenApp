@@ -1,11 +1,11 @@
 import React from "react";
 
-const Button = ({ text, type, onClick = null, id }) => {
+const Button = ({ text, type, onClick = null, id, exist = true }) => {
   return (
     <button
-    onClick={onClick ? () => onClick(id) : undefined}
+      onClick={onClick ? () => onClick(id) : undefined}
       type="submit"
-      className={`mt-6 ${
+      className={`mt-6 ${exist ? "" : "hidden"} ${
         type == "default"
           ? "bg-yellow-600 border-yellow-600"
           : type == "create"
