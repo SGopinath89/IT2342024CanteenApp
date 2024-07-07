@@ -96,13 +96,13 @@ const deleteorder = async (req, res) => {
 };
 
 const displayorders = async (req, res) => {
-  console.log(req.query.type)
+  console.log(req.query.type);
   try {
     // Convert string to ObjectId
     const canteen = await canteenmodel.aggregate([
-      { $match:{admin:req.user.id}}
-    ])
-    const canteenId = canteen._id
+      { $match:{admin:req.user.id}},
+    ]);
+    const canteenId = canteen._id;
     const orders = await ordermodel.aggregate([
       { $match: { canteenid: canteenId } },
     ]);
@@ -120,9 +120,10 @@ const displayorder = async (req, res) => {
   try {
     // Convert string to ObjectId
     const canteen = await canteenmodel.aggregate([
-      { $match:{admin:req.user.id}}
-    ])
-    const orders = await ordermodel.findById(id)
+      { $match:{admin:req.user.id}},
+    ]);
+    const orders = await ordermodel.findById(id);
+    
     if (!orders) {
       res.status(404).send({ success: true, message: "orders not found" });
     }

@@ -3,33 +3,31 @@ import Heading from "../../../components/Heading";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import { useSelector } from "react-redux";
-import bread from "./../../../assets/images/foods/bread.jpg";
-import dosa from "./../../../assets/images/foods/dosa.png";
-import friedrice from "./../../../assets/images/foods/friedrice.webp";
-import idly from "./../../../assets/images/foods/idly.png";
-import kottu from "./../../../assets/images/foods/kottu.webp";
-import macaroni from "./../../../assets/images/foods/macaroni.jpeg";
-import milkrice from "./../../../assets/images/foods/milkrice.jpeg";
-import milktea from "./../../../assets/images/foods/milktea.jpg";
-import pancake from "./../../../assets/images/foods/pancake.webp";
-import parata from "./../../../assets/images/foods/parata.avif";
-import plaintea from "./../../../assets/images/foods/plaintea.png";
-import riceandcurry from "./../../../assets/images/foods/riceandcurry.jpg";
-import rolls from "./../../../assets/images/foods/rolls.png";
-import roti from "./../../../assets/images/foods/roti.png";
-import samosa from "./../../../assets/images/foods/samosa.png";
-import stringhoppers from "./../../../assets/images/foods/stringhoppers.jpg";
-import ulunduwade from "./../../../assets/images/foods/ulunduwade.webp";
-import wade from "./../../../assets/images/foods/wade.jpg";
+import bread from "./../../../../public/foods/bread.jpg";
+import dosa from "./../../../../public/foods/dosa.png";
+import friedrice from "./../../../../public/foods/friedrice.webp";
+import idly from "./../../../../public/foods/idly.png";
+import kottu from "./../../../../public/foods/kottu.webp";
+import macaroni from "./../../../../public/foods/macaroni.jpeg";
+import milkrice from "./../../../../public/foods/milkrice.jpeg";
+import milktea from "./../../../../public/foods/milktea.jpg";
+import pancake from "./../../../../public/foods/pancake.webp";
+import parata from "./../../../../public/foods/parata.avif";
+import plaintea from "./../../../../public/foods/plaintea.png";
+import riceandcurry from "./../../../../public/foods/riceandcurry.jpg";
+import rolls from "./../../../../public/foods/rolls.png";
+import roti from "./../../../../public/foods/roti.png";
+import samosa from "./../../../../public/foods/samosa.png";
+import stringhoppers from "./../../../../public/foods/stringhoppers.jpg";
+import ulunduwade from "./../../../../public/foods/ulunduwade.webp";
+import wade from "./../../../../public/foods/wade.jpg";
 
 const StaffCreateFood = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [users, setUsers] = useState([]);
   const { _id } = useSelector((state) => state.user.currentUser);
-
   const availableTime = ["Breakfast", "Lunch", "Dinner", "Always"];
-
   const foodItems = [
     { name: "Bread", imageurl: bread },
     { name: "Dosa", imageurl: dosa },
@@ -50,12 +48,10 @@ const StaffCreateFood = () => {
     { name: "Ulundu Wade", imageurl: ulunduwade },
     { name: "Wade", imageurl: wade },
   ];
-
   useEffect(() => {
     const getCanteenId = async () => {
       try {
         const res = await fetch(`/api1/canteen/staff/${_id}`);
-
         if (res.ok) {
           const data = await res.json();
           console.log(data);
@@ -70,10 +66,8 @@ const StaffCreateFood = () => {
         console.log(error);
       }
     };
-
     getCanteenId();
   }, [_id]);
-
   const onInputChange = (e) => {
     setFormData((curData) => {
       if (e.target.id == "foodname") {
@@ -104,7 +98,6 @@ const StaffCreateFood = () => {
         },
         body: JSON.stringify(formData),
       });
-
       if (res.ok) {
         const data = await res.json();
         navigate("./../");
@@ -114,7 +107,6 @@ const StaffCreateFood = () => {
       alert("canteen creation failed");
     }
   };
-
   return (
     <div>
       <Heading heading="Create" />
@@ -186,7 +178,6 @@ const StaffCreateFood = () => {
               />
             </div>
           </div>
-
           <Button type="create" text="Create" />
         </form>
       </div>
