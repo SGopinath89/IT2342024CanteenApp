@@ -4,12 +4,12 @@ import logo from "../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
+import Button from "../components/Button";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const onInputChange = (e) => {
     setFormData((curData) => {
       return {
@@ -31,10 +31,8 @@ const SignIn = () => {
       if (res.ok) {
         const data = await res.json();
         console.log(data);
-
         alert("Login Succcess");
         dispatch(signInSuccess(data));
-
         if (data.usertype == "user") navigate("/user-home");
         if (data.usertype == "staff") navigate("/staff-home");
         if (data.usertype == "admin") navigate("/admin-home");
@@ -77,12 +75,8 @@ const SignIn = () => {
               onChange={(e) => onInputChange(e)}
             />
           </div>
-          <button
-            type="submit"
-            className="mt-6 text-xl bg-yellow-600 text-black px-4 py-2 rounded-xl mb-3 border border-yellow-600 transition-colors hover:bg-white"
-          >
-            SignIn
-          </button>
+
+          <Button text="SignIn" type="default" />
         </form>
         <Link to="/register" className="text-blue-900">
           Don't have an account? Let's Register
