@@ -11,7 +11,7 @@ const {
 const {
   verifyToken,
   checkUserType,
-} = require("../middlewears/auth.middlewear");
+} = require("../middlewares/auth.middleware");
 
 router.post("/", verifyToken, checkUserType("admin"), create);
 router.get("/", verifyToken, getcanteens);
