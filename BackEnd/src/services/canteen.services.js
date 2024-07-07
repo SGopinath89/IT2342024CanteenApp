@@ -46,12 +46,16 @@ const getcanteen = async (req, res) => {
   const id = req.params.id;
   try {
     let mongoId = new mongoose.Types.ObjectId(id);
+
     const canteens = await canteenmodel.find(mongoId);
     if (!canteens) {
       res.status(404).send({ success: false, message: "canteens not found" });
     }
+    res.status(200).json(canteens);
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
 const deletecanteen = async (req, res) => {
     const id = req.params.id;
