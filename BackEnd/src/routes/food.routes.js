@@ -12,7 +12,7 @@ const {
   verifyToken,
   checkUserType,
   canteenAdminProtect,
-} = require("../middlewears/auth.middlewear");
+} = require("../middlewares/auth.middleware");
 
 router.post("/", verifyToken, canteenAdminProtect, addfood);
 router.get("/", verifyToken, displayfoods);
