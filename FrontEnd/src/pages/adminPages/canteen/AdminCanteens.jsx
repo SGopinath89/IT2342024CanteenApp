@@ -9,7 +9,7 @@ const AdminCanteens = () => {
   const columns = ["Name", "Description", "Open Time", "Close Time"];
   const [rows, setRows] = useState([]);
 
-  const fecthCanteens = async () => {
+  const fetchCanteens = async () => {
     try {
       const res = await fetch("/api1/canteen/");
 
@@ -36,7 +36,7 @@ const AdminCanteens = () => {
       const res = await fetch(`/api1/canteen/${id}`, { method: "DELETE" });
       if (res.ok) {
         console.log("deleted");
-        fecthCanteens();
+        fetchCanteens();
       }
     } catch (error) {
       console.log(error);
@@ -44,12 +44,12 @@ const AdminCanteens = () => {
   };
 
   const editMethod = async (id) => {
-    navigate(`./update/${id}`, { state: { id } });
+    navigate(`./update/${id}`);
   };
 
   useEffect(() => {
-    console.log(123);
-    fecthCanteens();
+    
+    fetchCanteens();
   }, []);
 
   return (
