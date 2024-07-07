@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 //schema
 const canteenSchema = new mongoose.Schema(
   {
@@ -16,19 +15,19 @@ const canteenSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    oderid:[{
+    oderid: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "order",
+      },
+    ],
+    adminid: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Order",
-  }],
-    admin: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Admin",
+      ref: "user",
       required: true,
     },
   },
   { timestamps: true }
 );
-
 const canteenmodel = mongoose.model("canteen", canteenSchema);
-
 module.exports = canteenmodel;

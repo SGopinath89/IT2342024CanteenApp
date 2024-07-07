@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const scheema = mongoose.Schema;
-
 //schema used for food
 const foodscheema = new mongoose.Schema(
   {
@@ -12,10 +11,9 @@ const foodscheema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-
     Canteenid: {
       type: scheema.Types.ObjectId,
-      ref: "canteens",
+      ref: "canteen",
     },
     availableTime: {
       type: String,
@@ -30,7 +28,5 @@ const foodscheema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
 const foodmodels = mongoose.model("food", foodscheema);
-
 module.exports = foodmodels;
