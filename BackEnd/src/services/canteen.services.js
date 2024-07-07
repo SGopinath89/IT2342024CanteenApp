@@ -32,7 +32,7 @@ const create = async (req, res) => {
 };
 
 const getcanteens = async (req, res) => {
-  console.log(req.query.type)
+
   try {
     const canteens = await canteenmodel.find();
     if (!canteens) {
@@ -45,19 +45,14 @@ const getcanteens = async (req, res) => {
 };
 
 const getcanteen = async (req, res) => {
-  console.log(req.query.type)
   const id = req.params.id;
   try {
-    const canteens = await canteenmodel.find(id);
+    let mongoId = new mongoose.Types.ObjectId(id);
+
+    const canteens = await canteenmodel.find(mongoId);
     if (!canteens) {
       res.status(404).send({ success: false, message: "canteens not found" });
     }
-    res.status(200).json(canteens);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 
 const deletecanteen = async (req, res) => {
     const id = req.params.id;
@@ -105,52 +100,14 @@ const updatecanteen = async (req, res) => {
   }
 };
 
-const getfoods =async (req, res) => {
-  try {
-    const findfoods = await canteenmodel.aggregate([
-      { $match: { Canteenname: "Applied" } },
-      {
-        $lookup: {
-          from: "foods",
-          localField: "_id",
-          foreignField: "Canteenid",
-          as: "foods",
-        },
-      },
-      { $project: { _id: 0, Canteenname: 1, foods: 1 } },
-    ]);
-    res.status(200).json(findfoods);
-  } catch (err) {
-    console.log(err);
-  }
-}
-const checkAdmin = async (canteenID, userId) => {
-  if (!userId) {
-    throw new Error("User ID is required");
-  }
-  if (!canteenID) {
-    throw new Error("canteen ID is required");
-  }
-
-  const canteen = await canteenmodel.findById(canteenID);
- 
-  if ( !canteen.adminid.toString()) {
-    throw new Error("No admins found");
-  }
-
-  const isAdmin = (canteen.adminid.toString() === userId.toString())
-
-  return isAdmin;
-};
-
 
 module.exports = {
     create,
     getcanteens,
     getcanteen,
-    deletecanteen,
     updatecanteen,
-    getfoods,
-    checkAdmin
-};
+    deletecanteen
+}
+
+    
 
