@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import Heading from "../../../components/Heading";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../../../../VanniEats/FrontEnd/src/redux/user/cartSlice";
+import Button from "../../../components/Button";
 
 const Canteen = () => {
   const { canteenId } = useLocation().state;
@@ -35,7 +36,14 @@ const Canteen = () => {
 
   const onAddToCartClick = (e) => {
     const [foodId, foodName, foodPrice] = e.target.id.split("/");
-    let cartObj = { foodId, foodName, foodPrice: +foodPrice, quantity: 1 };
+    let cartObj = {
+      foodId,
+      foodName,
+      foodPrice: +foodPrice,
+      quantity: 1,
+      canteenId,
+      canteenName: name,
+    };
     dispatch(addToCart(cartObj));
   };
 
@@ -60,6 +68,9 @@ const Canteen = () => {
   return (
     <div className="min-h-screen">
       <Heading heading={name} />
+      <Link to="./../../cart" className="absolute right-5 top-5">
+        <Button text="My Cart" type="default" />
+      </Link>
       <div className="h-full p-8 flex">
         {foods.map((food, ind) => {
           const foodInCart = cartItems.some((item) => item.foodId === food._id);
