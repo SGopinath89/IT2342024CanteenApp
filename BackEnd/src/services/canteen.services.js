@@ -78,8 +78,11 @@ const getcanteen = async (req, res) => {
 
 const deletecanteen = async (req, res) => {
   const id = req.params.id;
+  console.log(id);
   try {
-    const result = await canteenmodel.findByIdAndDelete(id);
+    let mongoId = new mongoose.Types.ObjectId(id);
+
+    const result = await canteenmodel.findByIdAndDelete(mongoId);
 
     if (!result) {
       return res

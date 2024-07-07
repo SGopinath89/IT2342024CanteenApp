@@ -8,6 +8,7 @@ import StaffHome from "./pages/staffPages/StaffHome";
 import AdminHome from "./pages/adminPages/AdminHome";
 import AdminUsers from "./pages/adminPages/AdminUsers";
 import AdminCanteens from "./pages/adminPages/AdminCanteens";
+import AdminCreateCanteen from "./pages/adminPages/AdminCreateCanteen";
 
 const App = () => {
   return (
@@ -21,6 +22,10 @@ const App = () => {
         <Route path="/admin-home" element={<AdminHome />}></Route>
         <Route path="/admin-users" element={<AdminUsers />}></Route>
         <Route path="/admin-canteens" element={<AdminCanteens />}></Route>
+        <Route
+          path="/admin-create-canteen"
+          element={<AdminCreateCanteen />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
