@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Heading from "../../../components/Heading";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../../../../../VanniEats/FrontEnd/src/redux/user/cartSlice";
 
 const Canteen = () => {
   const { canteenId } = useLocation().state;
   const [foods, setFoods] = useState([]);
+  const dispatch = useDispatch();
+  const { cartItems } = useSelector((state) => state.cart);
 
   const foodItems = [
     "Bread",
@@ -28,16 +32,21 @@ const Canteen = () => {
   ];
 
   const { name } = useParams();
-  console.log(canteenId);
+
+  const onAddToCartClick = (e) => {
+    const [foodId, foodName, foodPrice] = e.target.id.split("/");
+    let cartObj = { foodId, foodName, foodPrice: +foodPrice, quantity: 1 };
+    dispatch(addToCart(cartObj));
+  };
 
   useEffect(() => {
     const fetchFoods = async () => {
+  
       try {
         const res = await fetch(`/api1/foods/canteen/${canteenId}`);
 
         if (res.ok) {
           const data = await res.json();
-          console.log(data);
           setFoods(data);
         }
       } catch (err) {
@@ -46,17 +55,19 @@ const Canteen = () => {
     };
 
     fetchFoods();
-  }, []);
+  }, [canteenId]);
 
   return (
     <div className="min-h-screen">
       <Heading heading={name} />
-      <div className="h-full p-8 flex ">
+      <div className="h-full p-8 flex">
         {foods.map((food, ind) => {
+          const foodInCart = cartItems.some((item) => item.foodId === food._id);
+
           return (
             <div
               key={ind}
-              className="w-60 h-72 border border-yellow-600 rounded-md overflow-hidden m-4"
+                className="w-60 h-72 border border-yellow-600 rounded-md overflow-hidden m-4"
             >
               <div className="w-60 h-48">
                 <img
@@ -64,6 +75,7 @@ const Canteen = () => {
                     .split("/")
                     .slice(-1)}`}
                   className="h-full w-full"
+                  alt={food.foodname}
                 />
               </div>
               <div className="flex justify-between flex-col p-3">
@@ -71,15 +83,19 @@ const Canteen = () => {
                   <p>
                     {foodItems.find(
                       (item) =>
-                        item.toLowerCase().split(" ").join("") == food.foodname
+                        item.toLowerCase().split(" ").join("") === food.foodname
                     )}
                   </p>
                   <p>Rs.{food.price}/=</p>
                 </div>
                 <div className="p-1 flex justify-center items-end">
                   <button
-                    id={food._id}
-                    className="bg-yellow-400 border border-yellow-600 transition-colors py-2 px-6 rounded-md hover:bg-white"
+                    onClick={onAddToCartClick}
+                    id={food._id + "/" + food.foodname + "/" + food.price}
+                    className={`border bg-yellow-400 border-yellow-600 transition-colors py-2 px-6 rounded-md  ${
+                      foodInCart ? "opacity-50" : "hover:bg-white"
+                    }`}
+                    disabled={foodInCart}
                   >
                     Add to cart
                   </button>

@@ -224,4 +224,5 @@ const StaffUpdateFood = () => {
     </div>
   );
 };
+
 export default StaffUpdateFood;

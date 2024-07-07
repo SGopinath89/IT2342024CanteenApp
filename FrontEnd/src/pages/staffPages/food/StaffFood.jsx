@@ -144,4 +144,5 @@ const StaffFood = () => {
     </div>
   );
 };
+
 export default StaffFood;
