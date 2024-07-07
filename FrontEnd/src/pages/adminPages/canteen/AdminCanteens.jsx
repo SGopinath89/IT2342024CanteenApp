@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Heading from "../../components/Heading";
-import Button from "../../components/Button";
-import Table from "../../components/Table";
+import Heading from "../../../components/Heading";
+import Button from "../../../components/Button";
+import Table from "../../../components/Table";
 import { Link, useNavigate } from "react-router-dom";
 
 const AdminCanteens = () => {
   const navigate = useNavigate();
-
   const columns = ["Name", "Description", "Open Time", "Close Time"];
   const [rows, setRows] = useState([]);
 
   const fecthCanteens = async () => {
     try {
-      const res = await fetch("api1/canteen/");
+      const res = await fetch("/api1/canteen/");
 
       if (res.ok) {
         const data = await res.json();
@@ -32,11 +31,9 @@ const AdminCanteens = () => {
       console.log(error);
     }
   };
-
   const deleteMethod = async (id) => {
     try {
       const res = await fetch(`/api1/canteen/${id}`, { method: "DELETE" });
-
       if (res.ok) {
         console.log("deleted");
         fecthCanteens();
@@ -46,16 +43,21 @@ const AdminCanteens = () => {
     }
   };
 
-  const editMethod = async (id) => {};
+  const editMethod = async (id) => {
+    navigate(`./update/${id}`, { state: { id } });
+  };
+
   useEffect(() => {
+    console.log(123);
     fecthCanteens();
   }, []);
 
   return (
     <div>
       <Heading heading="Canteen" />
+
       <div className="flex flex-col items-end p-5">
-      <Link to="../admin-create-canteen">
+        <Link to="./create">
           <Button text="Create" type="create" />
         </Link>
         <Table
@@ -68,5 +70,4 @@ const AdminCanteens = () => {
     </div>
   );
 };
-
 export default AdminCanteens;
