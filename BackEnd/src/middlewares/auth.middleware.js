@@ -43,6 +43,7 @@ const canteenAdminProtect = async (req, res, next) => {
     });
   }
   const { Canteenid } = req.body;
+  console.log(req.body);
   const userId = req.user._id;
   const isCanteenAdmin = await canteenservices.checkAdmin(Canteenid, userId);
   if (!isCanteenAdmin) {
