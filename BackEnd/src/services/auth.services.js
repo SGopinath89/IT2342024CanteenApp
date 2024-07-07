@@ -1,7 +1,6 @@
 const usermodel = require("../models/user.model.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
 const register = async (req, res) => {
   try {
     const { registrationnumber, username, password, telephone } = req.body;
@@ -29,9 +28,7 @@ const register = async (req, res) => {
       telephone,
       usertype: "user",
     });
-
     const { password: pass, usertype, ...rest } = user;
-
     res
       .status(201)
       .send({ success: true, message: "Successfully Registered", rest });
@@ -42,7 +39,6 @@ const register = async (req, res) => {
       .send({ sucess: false, message: "error in registered API", err });
   }
 };
-
 const login = async (req, res) => {
   try {
     const { registrationnumber, password } = req.body;
@@ -53,7 +49,6 @@ const login = async (req, res) => {
         message: "Please provide registration number and password",
       });
     }
-
     // Check if user exists
     const user = await usermodel.findOne({ registrationnumber });
     if (!user) {
@@ -62,7 +57,6 @@ const login = async (req, res) => {
         message: "User not found",
       });
     }
-
     // Check if password is correct
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
@@ -71,7 +65,6 @@ const login = async (req, res) => {
         message: "Invalid credentials",
       });
     }
-
     // Generate JWT
     const token = jwt.sign(
       { id: user._id, usertype: user.usertype },
@@ -81,11 +74,11 @@ const login = async (req, res) => {
       }
     );
 
-    res.status(200).send({
-      success: true,
-      message: "Login successful",
-      token,
-    });
+    const { password: pass, ...rest } = user._doc;
+    res
+      .cookie("authorization", token, { httpOnly: true })
+      .status(200)
+      .json(rest);
   } catch (err) {
     console.log(err);
     res.status(500).send({
@@ -95,7 +88,6 @@ const login = async (req, res) => {
     });
   }
 };
-
 module.exports = {
   register,
   login,
