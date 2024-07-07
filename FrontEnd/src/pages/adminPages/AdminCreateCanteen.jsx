@@ -3,7 +3,7 @@ import Heading from "../../components/Heading";
 import { useNavigate } from "react-router-dom";
 
 const AdminCreateCanteen = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [users, setUsers] = useState([]);
 
@@ -28,7 +28,6 @@ const AdminCreateCanteen = () => {
 
       if (res.ok) {
         const data = await res.json();
-        
         navigate("../admin-canteens");
       }
     } catch (error) {
@@ -49,8 +48,10 @@ const AdminCreateCanteen = () => {
         console.log(error);
       }
     };
+
     fetchUsers();
   }, []);
+
   return (
     <div>
       <Heading heading="Canteen" />
