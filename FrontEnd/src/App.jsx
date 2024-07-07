@@ -14,6 +14,7 @@ import StaffFood from "./pages/staffPages/food/StaffFood";
 import StaffOrders from "./pages/staffPages/order/StaffOrders";
 import StaffCreateFood from "./pages/staffPages/food/StaffCreateFood";
 import StaffUpdateFood from "./pages/staffPages/food/StaffUpdateFood";
+import Canteen from "./pages/userPages/Canteen/Canteen";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/signin" element={<SignIn />}></Route>
         <Route path="/user/" element={<UserHome />}></Route>
+        <Route path="/user/canteen/:name" element={<Canteen />}></Route>
         <Route path="/staff/" element={<StaffHome />}></Route>
         <Route path="/staff/orders" element={<StaffOrders />}></Route>
         <Route path="/staff/foods" element={<StaffFood />}></Route>
@@ -46,4 +48,5 @@ const App = () => {
     </BrowserRouter>
   );
 };
+
 export default App;
